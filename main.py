@@ -20,6 +20,10 @@ def fakebook():
 def friseursalon():
     return render_template("/friseursalon.html")
 
+@app.route("/boogle1")
+def boogle():
+    return render_template("/boogle.html")
+
 @app.route("/about")
 def about():
     return render_template("about.html")
