@@ -2,10 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for, \
     make_response  # import vom Modul flask der klasse "flask"
 import random
 import datetime
+from models import User, db
 
 from werkzeug.utils import redirect
 
 app = Flask(__name__)  # instance von der "flask" klasse
+db.create_all()
 
 
 @app.route("/")  # "/" ist home folder --> der pfad
@@ -66,6 +68,22 @@ def lucky_number():
 @app.route("/lucky_number/success", methods=["GET"])
 def lucky_number_success():
     return render_template("lucky_number_success.html")
+
+
+@app.route("/register", methods=["GET", "POST"])
+def register():
+    if request.method == "GET":
+        users = db.query(User).all()
+        context = {
+            "users": users
+        }
+        return render_template("register.html", **context )
+    elif request.method == "POST":
+        username = request.form.get("username")
+        new_user = User(name=username, secret_number=10)
+        db.add(new_user)    # wie git add --> speichert vor commit
+        db.commit()         # git commit --> abspeichern aller geaddeten elemente in einer transaktion.
+        return redirect(url_for('register'))
 
 
 # TODO: 1) add boogle site
