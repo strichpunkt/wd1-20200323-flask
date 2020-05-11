@@ -12,9 +12,13 @@ def main():
     return render_template("main.html")
 
 
-@app.route("/fakebook")
+@app.route("/e1-facebook")
 def fakebook():
     return render_template("e1-facebook.html")
+
+@app.route("/friseursalon")
+def friseursalon():
+    return render_template("/friseursalon.html")
 
 @app.route("/about")
 def about():
